@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "FamHub Inventory Website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sapdeleon/famhub.git"
+  },
+  "author": "Samuel de Leon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sapdeleon/famhub/issues"
+  },
+  "homepage": "https://github.com/sapdeleon/famhub#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "lodash": "^4.17.20",
+    "mongoose": "^5.11.11"
+  }
+}

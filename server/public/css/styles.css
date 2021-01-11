@@ -1,0 +1,70 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    position: relative;
+}
+
+.sam {
+    background-color: rgb(211, 255, 228);
+}
+
+.footer {
+    text-align: center;
+    position: relative;
+    top: 4em;
+}
+
+table, tr, th, td {
+    border: 1px solid black;
+}
+
+.home {
+    text-align: center;
+}
+
+nav, a {
+    text-align: right;
+    padding: 0.6em;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+
+a:hover {
+    color: greenyellow;
+}
+
+img {
+    height: 2em;
+    width: 2em;
+    border-radius: 50%;
+    position: absolute;
+    padding: 0.15em;
+}
+
+h1 {
+    top: 0.5em;
+    position: relative;
+    padding-bottom: 0.3em;
+}
+
+.famhub {
+    height: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 100%;
+}
+
+.table {
+    top: 3em;
+    position: relative;
+}
+
+.sales {
+    color: green;
+}
+.product {
+    color: rgb(21, 42, 136);
+}

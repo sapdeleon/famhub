@@ -1,0 +1,82 @@
+<%- include("partials/header") -%>
+    <div class="card sam">
+        <h1 class="sales">$ales Entry</h1>
+        <div class="card-body">
+            <form action="/sales" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label>Product</label>
+                        <select class="form-control form-control-sm" name="sku" id="sku">
+                            <option value="-">Select</option>
+                            <% products.forEach(function(prod) { %>
+                                <option value="<%= prod.sku %>">
+                                    <%= prod.sku %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Description</label>
+                        <select class="form-control form-control-sm" name="description" id="description">
+                            <option value="-">Select</option>
+                            <% products.forEach(function(prod) { %>
+                                <option value="<%= prod.description %>">
+                                    <%= prod.description %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <input class="form-control form-control-sm" type="text" name="cost" placeholder="Cost">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <input class="form-control form-control-sm" type="text" name="qty"
+                            placeholder="Quantity Purchased">
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="table sales">
+        <h2>$ales Inventory</h2>
+        <table>
+            <tr>
+                <th>SKU</th>
+                <th>DESCRIPTION</th>
+                <th>COST</th>
+                <th>QTY</th>
+                <th>TOTAL</th>
+                <th>DATE</th>
+                <th>TIME</th>
+            </tr>
+            <% sales.forEach(function(sale) { %>
+                <tr>
+                    <td>
+                        <%= sale.sku %>
+                    </td>
+                    <td>
+                        <%= sale.description %>
+                    </td>
+                    <td>
+                        <%= sale.cost %>
+                    </td>
+                    <td>
+                        <%= sale.qty %>
+                    </td>
+                    <td>
+                        <%= sale.total %>
+                    </td>
+                    <td>
+                        <%= sale.date.toDateString() %>
+                    </td>
+                    <td>
+                        <%= sale.date.toLocaleTimeString() %>
+                    </td>
+                </tr>
+                <% }) %>
+        </table>
+    </div>
+    <%- include("partials/footer") -%>

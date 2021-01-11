@@ -1,0 +1,84 @@
+<%- include("partials/header") -%>
+    <div class="card sam">
+        <h1>Inventory Entry</h1>
+        <div class="card-body">
+            <form action="/items" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label>Product</label>
+                        <select class="form-control form-control-sm" name="sku" id="sku">
+                            <option value="-">Select</option>
+                            <% products.forEach(function(prod) { %>
+                                <option value="<%= prod.sku %>">
+                                    <%= prod.sku %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Description</label>
+                        <select class="form-control form-control-sm" name="description" id="description">
+                            <option value="-">Select</option>
+                            <% products.forEach(function(prod) { %>
+                                <option value="<%= prod.description %>">
+                                    <%= prod.description %>
+                                </option>
+                                <% }); %>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Supplier</label>
+                        <select class="form-control form-control-sm" name="supplier" id="supplier">
+                            <option value="-">Select</option>
+                            <option value="Belly.ca">Belly.ca</option>
+                            <option value="Souveneir.ca">Souveneir.ca</option>
+                            <option value="Custom.ca">Custom.ca</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <input type="text" name="qty" placeholder="Qty in stock">
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="table">
+        <h2>Items Inventory</h2>
+        <table>
+            <tr>
+                <th>SKU</th>
+                <th>DESCRIPTION</th>
+                <th>SUPPLIER</th>
+                <th>QTY</th>
+                <th>DATE</th>
+                <th>TIME</th>
+            </tr>
+            <% items.forEach(function(item) { %>
+                <tr>
+                    <td>
+                        <%= item.sku %>
+                    </td>
+                    <td>
+                        <%= item.description %>
+                    </td>
+                    <td>
+                        <%= item.supplier %>
+                    </td>
+                    <td>
+                        <%= item.qty %>
+                    </td>
+                    <td>
+                        <%= item.date.toDateString() %>
+                    </td>
+                    <td>
+                        <%= item.date.toLocaleTimeString() %>
+                    </td>
+                </tr>
+                <% }) %>
+        </table>
+    </div>
+    <%- include("partials/footer") -%>

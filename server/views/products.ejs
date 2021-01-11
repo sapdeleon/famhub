@@ -1,0 +1,128 @@
+<%- include("partials/header") -%>
+    <div class="card sam">
+        <h1 class="product">Product Entry</h1>
+        <div class="card-body">
+            <form action="/products" method="post">
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <input class="form-control form-control-sm" type="text" name="sku" placeholder="Item Code">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input class="form-control form-control-sm" type="text" name="description"
+                            placeholder="Product Description">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-2">
+                        <label>Type</label>
+                        <select class="form-control form-control-sm" name="type" id="type">
+                            <option value="-">Select</option>
+                            <option value="Hat">Hat</option>
+                            <option value="Aprons">Aprons</option>
+                            <option value="T-Shirt">T-Shirt</option>
+                            <option value="Long Sleeves">Long Sleeves</option>
+                            <option value="Hoodies">Hoodies</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Color</label>
+                        <select class="form-control form-control-sm" name="color" id="color">
+                            <option value="-">Select</option>
+                            <option value="White">White</option>
+                            <option value="Black">Black</option>
+                            <option value="Red">Red</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Yellow">Yellow</option>
+                            <option value="Green">Green</option>
+                            <option value="Pink">Pink</option>
+                            <option value="Purple">Purple</option>
+                            <option value="Grey">Grey</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Size</label>
+                        <select class="form-control form-control-sm" name="size" id="size">
+                            <option value="-">Select</option>
+                            <option value="Youth">Youth</option>
+                            <option value="Adult">Adult</option>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                            <option value="Extra-Large">Extra-Large</option>
+                            <option value="2-XL">2-XL</option>
+                            <option value="3-XL">2-XL</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Brand</label>
+                        <select class="form-control form-control-sm" name="brand" id="brand">
+                            <option value="-">Select</option>
+                            <option value="ATC">ATC</option>
+                            <option value="AllStyles">AllStyles</option>
+                            <option value="Gildan">Gildan</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label>Supplier</label>
+                        <select class="form-control form-control-sm" name="supplier" id="supplier">
+                            <option value="-">Select</option>
+                            <option value="Belly.ca">Belly.ca</option>
+                            <option value="Souveneir.ca">Souveneir.ca</option>
+                            <option value="Custom.ca">Custom.ca</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="submit" name="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+    <div class="table product">
+        <h2>Products Inventory</h2>
+        <table>
+            <tr>
+                <th>SKU</th>
+                <th>DESCRIPTION</th>
+                <th>TYPE</th>
+                <th>COLOR</th>
+                <th>SIZE</th>
+                <th>BRAND</th>
+                <th>SUPPLIER</th>
+                <th>DATE</th>
+                <th>TIME</th>
+            </tr>
+            <% products.forEach(function(product) { %>
+                <tr>
+                    <td>
+                        <%= product.sku %>
+                    </td>
+                    <td>
+                        <%= product.description %>
+                    </td>
+                    <td>
+                        <%= product.type %>
+                    </td>
+                    <td>
+                        <%= product.brand.color %>
+                    </td>
+                    <td>
+                        <%= product.brand.size %>
+                    </td>
+                    <td>
+                        <%= product.brand.name %>
+                    </td>
+                    <td>
+                        <%= product.supplier %>
+                    </td>
+                    <td>
+                        <%= product.date.toDateString() %>
+                    </td>
+                    <td>
+                        <%= product.date.toLocaleTimeString() %>
+                    </td>
+                </tr>
+                <% }) %>
+        </table>
+    </div>
+    <%- include("partials/footer") -%>
