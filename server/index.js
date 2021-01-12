@@ -197,54 +197,6 @@ app.route("/sales")
         });
     });
 
-// app.route("/articles/:articleTitle")
-
-//     .get((req, res) => {
-//         Article.findOne({ title: req.params.articleTitle }, (err, foundItem) => {
-//             if (foundItem) { res.send(foundItem); }
-//             else { res.send("No article found!"); }
-//         });
-//     })
-//     // update selected article - title/article
-//     .put((req, res) => {
-
-//         Article.update(
-//             { title: req.params.articleTitle },
-//             { title: req.body.title, content: req.body.content },
-//             { overwrite: true },
-//             (err) => {
-//                 if (!err) {
-//                     res.send("Successfully updated the selected article.");
-//                 }
-//             }
-//         );
-//     })
-//     // update specific field of specific article
-//     .patch(function (req, res) {
-
-//         Article.update(
-//             { title: req.params.articleTitle },
-//             { $set: req.body },
-//             (err) => {
-//                 if (!err) {
-//                     res.send("Successfully updated article.");
-//                 } else { res.send(err); }
-//             }
-//         );
-//     })
-
-//     .delete((req, res) => {
-
-//         Article.deleteOne(
-//             { title: req.params.articleTitle },
-//             (err) => {
-//                 if (!err) {
-//                     res.send("Successfully deleted the corresponding article.");
-//                 } else { res.send(err); }
-//             }
-//         );
-//     });
-
 let port = process.env.PORT;
 if (port == null || port == "") {
     port = 3000;
