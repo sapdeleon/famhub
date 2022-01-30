@@ -6,21 +6,27 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const _ = require("lodash");
 const db = require("./config/dbconfig");
-// models
-const Product = require("./models/product");
-const Item = require("./models/item");
-const Sale = require("./models/sale");
+const products = require("./routes/productRoutes");
+const items = require("./routes/itemRoutes");
+const sales = require("./routes/saleRoutes");
+
+const app = express();
+
+// middleware
+app.use(express.json());
+app.set("view engine", "ejs");
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
+
+// routes
+app.use("/products", products);
+app.use("/items", items);
+app.use("/sales", sales);
 
 mongoose
   .connect(db.url, db.options)
   .then(() => console.log("> Successfully connected to DB"))
   .catch((err) => console.log(err));
-
-const app = express();
-
-app.set("view engine", "ejs");
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   res.render("home");
@@ -42,163 +48,6 @@ app.post("/login", (req, res) => {
     res.redirect("/login");
   }
 });
-
-//////////////////////// PRODUCTS SECTION ////////////////////////
-
-Product.createIndexes(); // mongoDB unique ID
-
-app
-  .route("/products")
-  // read all items in the inventory
-  .get((req, res) => {
-    Product.find(
-      {},
-      { sku: 1, description: 1, type: 1, brand: 1, supplier: 1, date: 1 },
-      (err, foundItems) => {
-        if (!err) {
-          res.render("products", { products: foundItems });
-        } else {
-          res.send(err);
-        }
-      }
-    );
-  })
-  // create new item in the inventory
-  .post((req, res) => {
-    const newItem = new Product({
-      sku: req.body.sku,
-      description: req.body.description,
-      type: req.body.type,
-      brand: {
-        color: req.body.color,
-        size: req.body.size,
-        name: req.body.brand,
-      },
-      supplier: req.body.supplier,
-      date: new Date(),
-    });
-    newItem.save((err) => {
-      if (!err) {
-        res.redirect("products");
-      } else {
-        res.send(err);
-      }
-    });
-  })
-  // delete all articles
-  .delete((req, res) => {
-    Product.deleteMany((err) => {
-      if (!err) {
-        res.send("Deleted All!");
-      } else {
-        res.send(err);
-      }
-    });
-  });
-
-//////////////////////// ITEM INVENTORY SECTION ////////////////////////
-
-Item.createIndexes();
-
-app
-  .route("/items")
-  // read all items in the inventory
-  .get((req, res) => {
-    Item.find({}, (err, foundItems) => {
-      if (!err) {
-        Product.find({}, (perr, foundProds) => {
-          if (!perr) {
-            res.render("items", { items: foundItems, products: foundProds });
-          }
-        });
-      } else {
-        res.send(err);
-      }
-    });
-  })
-  // create new item in the inventory
-  .post((req, res) => {
-    const newItem = new Item({
-      sku: req.body.sku,
-      description: req.body.description,
-      supplier: req.body.supplier,
-      qty: req.body.qty,
-      date: new Date(),
-    });
-    newItem.save((err) => {
-      if (!err) {
-        res.redirect("items");
-      } else {
-        res.send(err);
-      }
-    });
-  })
-  // delete all inventories
-  .delete((req, res) => {
-    Item.deleteMany((err) => {
-      if (!err) {
-        res.send("Deleted All!");
-      } else {
-        res.send(err);
-      }
-    });
-  });
-
-//////////////////////// SALES SECTION ////////////////////////
-
-app
-  .route("/sales")
-  // read all items in the sales collection
-  .get((req, res) => {
-    Sale.find({}, (err, foundItems) => {
-      if (!err) {
-        Product.find({}, (perr, foundProds) => {
-          if (!perr) {
-            res.render("sales", { sales: foundItems, products: foundProds });
-          }
-        });
-      } else {
-        res.send(err);
-      }
-    });
-  })
-  // create new sale item in the sales collection
-  .post((req, res) => {
-    const newItem = new Sale({
-      sku: req.body.sku,
-      description: req.body.description,
-      cost: req.body.cost,
-      qty: req.body.qty,
-      total: req.body.cost * req.body.qty,
-      date: new Date(),
-    });
-
-    newItem.save((err) => {
-      if (!err) {
-        Item.findOneAndUpdate(
-          { sku: req.body.sku },
-          { $inc: { qty: -req.body.qty } }
-        ).exec();
-        Item.findOneAndUpdate(
-          { sku: req.body.sku },
-          { $currentDate: { date: true } }
-        ).exec();
-        res.redirect("sales");
-      } else {
-        res.send(err);
-      }
-    });
-  })
-  // delete all sales
-  .delete((req, res) => {
-    Sale.deleteMany((err) => {
-      if (!err) {
-        res.send("Deleted All!");
-      } else {
-        res.send(err);
-      }
-    });
-  });
 
 let port = process.env.PORT;
 if (port == null || port == "") {
